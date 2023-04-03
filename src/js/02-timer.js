@@ -16,11 +16,7 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    console.log(selectedDates[0]);
-    const currentDate = new Date();
-    console.log(currentDate);
-
-    differenceMs = selectedDates[0].getTime() - currentDate.getTime();
+    differenceMs = selectedDates[0] - Date.now();
     if (differenceMs <= 0) {
       Notify.failure('Please choose a date in the future');
       refs.startBtnEl.setAttribute('disabled', '');
@@ -60,16 +56,16 @@ function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 }
 
-function onStartBtnClick(e) {
+function onStartBtnClick() {
   const timerId = setInterval(() => {
-    if (differenceMs < 0) {
+    if (differenceMs <= 0) {
       clearInterval(timerId);
     } else {
-      const dateObj = convertMs(differenceMs);
-      refs.daysSpanEl.textContent = addLeadingZero(dateObj.days);
-      refs.hoursSpanEl.textContent = addLeadingZero(dateObj.hours);
-      refs.minutesSpanEl.textContent = addLeadingZero(dateObj.minutes);
-      refs.secondsSpanEl.textContent = addLeadingZero(dateObj.seconds);
+      const { days, hours, minutes, seconds } = convertMs(differenceMs);
+      refs.daysSpanEl.textContent = addLeadingZero(days);
+      refs.hoursSpanEl.textContent = addLeadingZero(hours);
+      refs.minutesSpanEl.textContent = addLeadingZero(minutes);
+      refs.secondsSpanEl.textContent = addLeadingZero(seconds);
       differenceMs = differenceMs - 1000;
     }
   }, 1000);

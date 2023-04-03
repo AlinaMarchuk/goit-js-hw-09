@@ -5,6 +5,7 @@ const refs = {
 };
 let timerId = null;
 
+refs.btnStopEl.setAttribute('disabled', '');
 refs.btnStartEl.addEventListener('click', onBtnStartElClick);
 refs.btnStopEl.addEventListener('click', onBtnStopElClick);
 
