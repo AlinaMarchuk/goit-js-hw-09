@@ -5,7 +5,8 @@ const refs = {
 };
 let timerId = null;
 
-refs.btnStopEl.setAttribute('disabled', '');
+refs.btnStopEl.disabled = true;
+//refs.btnStopEl.setAttribute('disabled', '');
 refs.btnStartEl.addEventListener('click', onBtnStartElClick);
 refs.btnStopEl.addEventListener('click', onBtnStopElClick);
 
@@ -19,12 +20,15 @@ function onBtnStartElClick(e) {
   timerId = setInterval(() => {
     refs.bodyEl.style.backgroundColor = getRandomHexColor();
   }, 1000);
-  refs.btnStartEl.setAttribute('disabled', '');
-  refs.btnStopEl.removeAttribute('disabled');
+  changeBtnStatus();
 }
 
 function onBtnStopElClick(e) {
   clearInterval(timerId);
-  refs.btnStopEl.setAttribute('disabled', '');
-  refs.btnStartEl.removeAttribute('disabled');
+  changeBtnStatus();
+}
+
+function changeBtnStatus() {
+  refs.btnStartEl.disabled = !refs.btnStartEl.disabled;
+  refs.btnStopEl.disabled = !refs.btnStopEl.disabled;
 }

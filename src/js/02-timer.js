@@ -4,10 +4,11 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const refs = {
   startBtnEl: document.querySelector('button[data-start]'),
-  daysSpanEl: document.querySelector('span[data-days]'),
-  hoursSpanEl: document.querySelector('span[data-hours]'),
-  minutesSpanEl: document.querySelector('span[data-minutes]'),
-  secondsSpanEl: document.querySelector('span[data-seconds]'),
+  valueElem: document.querySelectorAll('.value'),
+  // daysSpanEl: document.querySelector('span[data-days]'),
+  // hoursSpanEl: document.querySelector('span[data-hours]'),
+  // minutesSpanEl: document.querySelector('span[data-minutes]'),
+  // secondsSpanEl: document.querySelector('span[data-seconds]'),
 };
 
 const options = {
@@ -61,11 +62,14 @@ function onStartBtnClick() {
     if (differenceMs <= 0) {
       clearInterval(timerId);
     } else {
-      const { days, hours, minutes, seconds } = convertMs(differenceMs);
-      refs.daysSpanEl.textContent = addLeadingZero(days);
-      refs.hoursSpanEl.textContent = addLeadingZero(hours);
-      refs.minutesSpanEl.textContent = addLeadingZero(minutes);
-      refs.secondsSpanEl.textContent = addLeadingZero(seconds);
+      refs.valueElem.forEach((el, idx) => {
+        const arrKeys = Object.values(convertMs(differenceMs));
+        el.textContent = addLeadingZero(arrKeys[idx]);
+      });
+      // refs.daysSpanEl.textContent = addLeadingZero(days);
+      // refs.hoursSpanEl.textContent = addLeadingZero(hours);
+      // refs.minutesSpanEl.textContent = addLeadingZero(minutes);
+      // refs.secondsSpanEl.textContent = addLeadingZero(seconds);
       differenceMs = differenceMs - 1000;
     }
   }, 1000);
